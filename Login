@@ -1,0 +1,84 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+
+namespace Muck
+{
+    public partial class logIn : Form
+    {
+        public logIn()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            var cn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ajarr\source\repos\Muck\Muck\Database1.mdf;Integrated Security=True");
+            cn.Open();
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (txtPassword.Text != string.Empty || txtUsername.Text != string.Empty)
+            {
+                var cn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;
+                    AttachDbFilename=C:\Users\ajarr\source\repos\Muck\Muck\Database1.mdf;Integrated Security=True");
+                var cmd = new SqlCommand("select * from LoginTable where username='" + txtUsername.Text + "' and password='" + txtPassword.Text + "'", cn);
+               var dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    dr.Close();
+                    this.Hide();
+                    Home home = new Home();
+                    home.ShowDialog();
+                }
+                else
+                {
+                    dr.Close();
+                    MessageBox.Show("No Account avilable with this username and password ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Please enter value in all field.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+            txtUsername.Clear();
+            txtPassword.Clear();
+            txtUsername.Focus();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void btn_GoToRegister_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Registration = new Registration();
+            Registration.Show();
+        }
+
+        private void txtUsername_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
