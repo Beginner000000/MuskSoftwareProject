@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MuskSoftwareProject
+namespace Muck
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace MuskSoftwareProject
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm());
+            Application.Run(new logIn());
         }
     }
 }
